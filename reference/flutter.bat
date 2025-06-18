@@ -33,7 +33,7 @@ IF NOT EXIST "%flutter_root%\.git" (
 )
 
 REM Include shared scripts in shared.bat
-SET shared_bin=%FLUTTER_ROOT%\bin\internal\shared.bat
+SET shared_bin=%FLUTTER_ROOT%\bin\shared.bat
 CALL "%shared_bin%"
 
 SET flutter_tools_dir=%FLUTTER_ROOT%\packages\flutter_tools
@@ -42,7 +42,7 @@ SET snapshot_path=%cache_dir%\flutter_tools.snapshot
 SET dart_sdk_path=%cache_dir%\dart-sdk
 SET dart=%dart_sdk_path%\bin\dart.exe
 
-SET exit_with_errorlevel=%FLUTTER_ROOT%/bin/internal/exit_with_errorlevel.bat
+SET exit_with_errorlevel=%FLUTTER_ROOT%/bin/exit_with_errorlevel.bat
 
 REM Chaining the call to 'dart' and 'exit' with an ampersand ensures that
 REM Windows reads both commands into memory once before executing them. This

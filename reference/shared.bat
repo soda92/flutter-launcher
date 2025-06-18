@@ -47,7 +47,7 @@ GOTO :after_subroutine
 
 :subroutine
   REM If present, run the bootstrap script first
-  SET bootstrap_path=%FLUTTER_ROOT%\bin\internal\bootstrap.bat
+  SET bootstrap_path=%FLUTTER_ROOT%\bin\bootstrap.bat
   IF EXIST "%bootstrap_path%" (
     CALL "%bootstrap_path%"
   )
@@ -115,7 +115,7 @@ GOTO :after_subroutine
         ECHO        Either pwsh.exe or PowerShell.exe must be in your PATH. 1>&2
         EXIT 1
     )
-    SET update_engine_bin=%FLUTTER_ROOT%\bin\internal\update_engine_version.ps1
+    SET update_engine_bin=%FLUTTER_ROOT%\bin\update_engine_version.ps1
     REM Escape apostrophes from the executable path
     SET "update_engine_bin=%update_engine_bin:'=''%"
     REM PowerShell command must have exit code set in order to prevent all non-zero exit codes from being translated
@@ -147,7 +147,7 @@ GOTO :after_subroutine
     )
     SET /A dart_sdk_retries+=1
     ECHO Checking Dart SDK version... 1>&2
-    SET update_dart_bin=%FLUTTER_ROOT%\bin\internal\update_dart_sdk.ps1
+    SET update_dart_bin=%FLUTTER_ROOT%\bin\update_dart_sdk.ps1
     REM Escape apostrophes from the executable path
     SET "update_dart_bin=%update_dart_bin:'=''%"
     REM PowerShell command must have exit code set in order to prevent all non-zero exit codes from being translated
