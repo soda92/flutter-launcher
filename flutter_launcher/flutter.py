@@ -28,18 +28,25 @@ def main():
         print("       git clone -b stable https://github.com/flutter/flutter.git")
         sys.exit(1)
 
-    # Include shared scripts
-    from flutter_launcher.shared import main as shared
-    shared()
+    try:
+        # Include shared scripts
+        from flutter_launcher.shared import main as shared_main
+        shared_main()
 
-    flutter_tools_dir = os.path.join(flutter_root, "packages", "flutter_tools")
-    cache_dir = os.path.join(flutter_root, "bin", "cache")
-    snapshot_path = os.path.join(cache_dir, "flutter_tools.snapshot")
-    dart_sdk_path = os.path.join(cache_dir, "dart-sdk")
-    dart = os.path.join(dart_sdk_path, "bin", "dart.exe")
+        flutter_tools_dir = os.path.join(flutter_root, "packages", "flutter_tools")
+        cache_dir = os.path.join(flutter_root, "bin", "cache")
+        snapshot_path = os.path.join(cache_dir, "flutter_tools.snapshot")
+        dart_sdk_path = os.path.join(cache_dir, "dart-sdk")
+        dart = os.path.join(dart_sdk_path, "bin", "dart.exe")
 
-    command = [dart, "--packages=" + os.path.join(flutter_tools_dir, ".dart_tool", "package_config.json")]
-    if 'FLUTTER_TOOL_ARGS' in os.environ:
-        command.extend(os.environ['FLUTTER_TOOL_ARGS'].split())
-    command.extend([snapshot_path] + sys.argv[1:])
-    subprocess.run(command, check=True)
+        command = [dart, "--packages=" + os.path.join(flutter_tools_dir, ".dart_tool", "package_config.json")]
+        if 'FLUTTER_TOOL_ARGS' in os.environ:
+            command.extend(os.environ['FLUTTER_TOOL_ARGS'].split())
+        command.extend([snapshot_path] + sys.argv[1:])
+        subprocess.run(command, check=True)
+    except KeyboardInterrupt:
+        print("\nFlutter command cancelled by user.", file=sys.stderr)
+        sys.exit(130) # Standard exit code for ^C
+    except subprocess.CalledProcessError as e:
+        # The subprocess itself exited with an error code
+        sys.exit(e.returncode)

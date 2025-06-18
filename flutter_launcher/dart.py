@@ -1,23 +1,24 @@
 import os
 import subprocess
 import sys
-import pathlib
+from .common import get_flutter_root_path, get_dart_exe_path
+from .shared import main as run_shared_main
 
 def main():
-    # script_dir = os.path.dirname(os.path.abspath(__file__))
-    flutter_root_env = os.environ.get('FLUTTER_ROOT')
-    if flutter_root_env:
-        flutter_root = os.path.abspath(flutter_root_env)
-    else:
-        flutter_root = os.path.abspath(os.path.join(pathlib.Path.home(), "Downloads", "flutter"))
+    try:
+        flutter_root = get_flutter_root_path()
 
-    # Include shared scripts
-    shared_bin = os.path.join(flutter_root, "bin", "internal", "shared.py")
-    subprocess.check_call(["python", shared_bin])
+        # Run shared setup. This will also handle SDK downloads/updates if necessary.
+        run_shared_main(flutter_root_override=flutter_root)
 
-    cache_dir = os.path.join(flutter_root, "bin", "cache")
-    dart_sdk_path = os.path.join(cache_dir, "dart-sdk")
-    dart = os.path.join(dart_sdk_path, "bin", "dart.exe")
+        dart_exe = get_dart_exe_path(flutter_root)
 
-    command = [dart] + sys.argv[1:]
-    subprocess.run(command, check=True)
+        command = [dart_exe] + sys.argv[1:]
+        subprocess.run(command, check=True)
+
+    except KeyboardInterrupt:
+        print("\nDart command cancelled by user.", file=sys.stderr)
+        sys.exit(130) # Standard exit code for ^C
+    except subprocess.CalledProcessError as e:
+        # The subprocess itself exited with an error code
+        sys.exit(e.returncode)

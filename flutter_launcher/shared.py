@@ -6,13 +6,16 @@ import shutil
 import time
 import glob
 
-def main():
-    # script_dir = os.path.dirname(os.path.abspath(__file__))
-    flutter_root_env = os.environ.get('FLUTTER_ROOT')
-    if flutter_root_env:
-        flutter_root = os.path.abspath(flutter_root_env)
+def main(flutter_root_override=None):
+    if flutter_root_override:
+        flutter_root = os.path.abspath(flutter_root_override)
     else:
-        flutter_root = os.path.abspath(os.path.join(pathlib.Path.home(), "Downloads", "flutter"))
+        # This path is taken if flutter_root_override is not provided
+        flutter_root_env = os.environ.get('FLUTTER_ROOT')
+        if flutter_root_env:
+            flutter_root = os.path.abspath(flutter_root_env)
+        else:
+            flutter_root = os.path.abspath(os.path.join(pathlib.Path.home(), "Downloads", "flutter"))
 
     flutter_tools_dir = os.path.join(flutter_root, "packages", "flutter_tools")
     cache_dir = os.path.join(flutter_root, "bin", "cache")
