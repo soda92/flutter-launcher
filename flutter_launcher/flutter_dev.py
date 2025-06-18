@@ -1,13 +1,18 @@
 import os
 import subprocess
 import sys
+import pathlib
 
 def main():
     # To debug the tool, you can uncomment the following line to enable debug mode:
     # os.environ['FLUTTER_TOOL_ARGS'] = "--enable-asserts " + os.environ.get('FLUTTER_TOOL_ARGS', '')
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    flutter_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
+    flutter_root_env = os.environ.get('FLUTTER_ROOT')
+    if flutter_root_env:
+        flutter_root = os.path.abspath(flutter_root_env)
+    else:
+        flutter_root = os.path.abspath(os.path.join(pathlib.Path.home(), "Downloads", "flutter"))
 
     # If available, add location of bundled mingit to PATH
     mingit_path = os.path.join(flutter_root, "bin", "mingit", "cmd")
