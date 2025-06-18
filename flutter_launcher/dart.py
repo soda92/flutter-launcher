@@ -1,0 +1,18 @@
+import os
+import subprocess
+import sys
+
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    flutter_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
+
+    # Include shared scripts
+    shared_bin = os.path.join(flutter_root, "bin", "internal", "shared.py")
+    subprocess.check_call(["python", shared_bin])
+
+    cache_dir = os.path.join(flutter_root, "bin", "cache")
+    dart_sdk_path = os.path.join(cache_dir, "dart-sdk")
+    dart = os.path.join(dart_sdk_path, "bin", "dart.exe")
+
+    command = [dart] + sys.argv[1:]
+    subprocess.run(command, check=True)

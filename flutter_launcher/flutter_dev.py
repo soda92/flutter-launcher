@@ -29,12 +29,12 @@ def main():
 
     flutter_tools_dir = os.path.join(flutter_root, "packages", "flutter_tools")
     cache_dir = os.path.join(flutter_root, "bin", "cache")
-    snapshot_path = os.path.join(cache_dir, "flutter_tools.snapshot")
+    script_path = os.path.join(flutter_tools_dir, "bin", "flutter_tools.dart")
     dart_sdk_path = os.path.join(cache_dir, "dart-sdk")
     dart = os.path.join(dart_sdk_path, "bin", "dart.exe")
 
-    command = [dart, "--packages=" + os.path.join(flutter_tools_dir, ".dart_tool", "package_config.json")]
+    command = [dart, "run", "--resident", "--packages=" + os.path.join(flutter_tools_dir, ".dart_tool", "package_config.json")]
     if 'FLUTTER_TOOL_ARGS' in os.environ:
         command.extend(os.environ['FLUTTER_TOOL_ARGS'].split())
-    command.extend([snapshot_path] + sys.argv[1:])
+    command.extend([script_path] + sys.argv[1:])
     subprocess.run(command, check=True)

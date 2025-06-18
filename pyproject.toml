@@ -35,5 +35,5 @@ packages = ["flutter_launcher"]
 
 [project.scripts]
 flutter = "flutter_launcher.flutter:main"
-flutter-dev = "flutter_launcher.flutter:dev"
+flutter-dev = "flutter_launcher.flutter_dev:main"
 dart = "flutter_launcher.dart:main"
