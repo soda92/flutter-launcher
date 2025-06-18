@@ -1,4 +1,3 @@
-import os
 import subprocess
 import sys
 from .common import get_flutter_root_path, get_dart_exe_path
