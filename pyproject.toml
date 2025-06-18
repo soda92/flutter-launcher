@@ -1,6 +1,6 @@
 [project]
 name = "flutter-launcher"
-version = "2025.6.18.0"
+version = "2025.6.18.1"
 description = "launcher script for flutter"
 readme = "README.md"
 requires-python = ">=3.11"
