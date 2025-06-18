@@ -125,4 +125,4 @@ Remove-Item $dartSdkZip
 $engineVersion | Out-File $engineStamp -Encoding ASCII
 
 # Try to delete all old SDKs and license files.
-Get-ChildItem -Path $cachePath | Where {$_.BaseName.StartsWith($oldDartSdkPrefix)} | Remove-Item -Recurse -ErrorAction SilentlyContinue
+Get-ChildItem -Path $cachePath | Where-Object {$_.BaseName.StartsWith($oldDartSdkPrefix)} | Remove-Item -Recurse -ErrorAction SilentlyContinue

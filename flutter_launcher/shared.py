@@ -7,7 +7,7 @@ import time
 import glob
 
 def main():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # script_dir = os.path.dirname(os.path.abspath(__file__))
     flutter_root_env = os.environ.get('FLUTTER_ROOT')
     if flutter_root_env:
         flutter_root = os.path.abspath(flutter_root_env)
